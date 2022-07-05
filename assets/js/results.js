@@ -1,9 +1,10 @@
-var searchq = ''
-
-// possible formats : maps, audio, photos, manuscripts, newspapers, film/video, music, websites
-var format = "manuscripts"
-
 var objData
+
+var queryString = document.location.search;
+var inputVal = queryString.split('=')[1]
+var format = queryString.split('=')[2]
+console.log(inputVal,format)
+
 var getData = function(searchq,format){
     var requestURL = `https://www.loc.gov/${format}/?fo=json&?q=${searchq}`
         fetch(requestURL)
@@ -17,7 +18,6 @@ var getData = function(searchq,format){
         })
         }
 
-var resultsArr = []
 var objData = function() {
     console.log(resultsArr);
     console.log(resultsArr[0].title)
@@ -26,12 +26,4 @@ var objData = function() {
     console.log(resultsArr[0].description)
 }
 
-var formEl = document.querySelector("#form")
-
-formEl.addEventListener('submit', function(e){
-    e.preventDefault()
-    var inputVal = document.querySelector('#search').value 
-    console.log(inputVal)
-    document.location.replace(`./searchresult.html?val=${inputVal}=${format}`)
-})
-
+getData(inputVal, format)
